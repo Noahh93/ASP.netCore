@@ -5,28 +5,33 @@ namespace WebApp.Controllers
 {
     public class CategoryController : Controller
     {
-        Category[] _categories;
+        List<Category> _categories;
         public CategoryController() 
         {
-            Product product1 = new Product();
-            product1.ID = 1;
-            product1.Name = "A";
-            product1.Quantity = 1;
+            _categories = new List<Category>();
+            Category category = new Category();
+            category.Category_ID = 1;
+            category.Category_Name = "Electronics";
+            category.Category_Description = "Description";
+            category.ImagePath = "/images/laptop.png";
 
-            _categories[0] = new Category();
-            _categories[0].Category_ID = 1;
-            _categories[0].Category_Name = "Electronics";
-            _categories[0].Category_Description = "This is the category of Electronics products";
+            _categories.Add(category);
 
-            Product product2 = new Product();
-            product2.ID = 2;
-            product2.Name = "B";
-            product2.Quantity = 1;
+            Category category2 = new Category();
+            category2.Category_ID = 2;
+            category2.Category_Name = "Fabrics";
+            category2.Category_Description = "Description";
+            category2.ImagePath = "/images/jeans.png";
 
-            _categories[1] = new Category();
-            _categories[1].Category_ID = 1;
-            _categories[1].Category_Name = "Clothes";
-            _categories[1].Category_Description = "This is the category of Clothes products";
+            _categories.Add(category2);
+
+            Category category3 = new Category();
+            category3.Category_ID = 3;
+            category3.Category_Name = "Accessories";
+            category3.Category_Description = "Description";
+            category3.ImagePath = "/images/iphone.png";
+
+            _categories.Add(category3);
 
         }
         public string Index()
@@ -45,22 +50,27 @@ namespace WebApp.Controllers
         {
             return $"Product ID is {id} and name is {name}";
         }
-        public string GetCategoryByID(int id)
+        public ActionResult GetCategoryByID(int id)
         {
-            return $"This Category contains Category ID:{_categories[id].Category_ID}," +
-                                        $"Category Name:{_categories[id].Category_Name}," +
-                                 $"Category Description:{_categories[id].Category_Description}";
-        }
-        public ActionResult GetAllProducts()
-        {
-            string result = "";
-            for (int i = 0; i < _categories.Length; i++)
+            foreach(Category category in _categories)
             {
-                result = result + $"Category ID: {_categories[i].Category_ID}," +
-                $"Category ID: Category Name: {_categories[i].Category_Name}," +
-                $"Category Description: {_categories[i].Category_Description},";
+                if(category.Category_ID == id)
+                {
+                    return View(category);
+                }
             }
-            return Content(result);
+
+            Category category1 = new Category();
+            return View(category1);
         }
+        public ActionResult GetAllCategories()
+        {
+            return View(_categories);
+        }
+        public ActionResult GetAllTableCategories()
+        {
+            return View(_categories);
+        }
+
     }
 }

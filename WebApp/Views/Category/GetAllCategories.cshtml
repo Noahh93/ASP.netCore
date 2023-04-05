@@ -1,0 +1,9 @@
+﻿@model IEnumerable<WebApp.Models.Category>
+
+@foreach(Category category in Model)
+{
+    <div>Category ID: @category.Category_ID</div>
+    <div>Category Name: @category.Category_Name</div>
+    <div>Category Description: @category.Category_Description</div>
+}
+
