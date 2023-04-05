@@ -1,0 +1,84 @@
+﻿
+<form method="get" asp-controller="Product" asp-action="ProductSave">
+    <div>
+        <h1 style="text-align:center;">Add new product</h1>
+        <table style="text-align:left;">
+            <tr>
+                <td><div style="font-weight:bold;">Product ID:</div></td>
+                <td><input type="text" id="ID" name="ID"/></td>
+                <td id="errID" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product Name:</div></td>
+                <td><input type="text" id="Name" name="Name"/></td>
+                <td id="errName" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product Quantity:</div></td>
+                <td><input type="text" id="Quantity" name="Quantity"/></td>
+                <td id="errQuantity" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product Price:</div></td>
+                <td><input type="text" id="Price" name="Price"/></td>
+                <td id="errPrice" style="color:red; font-weight:bold;"></td>
+            </tr>
+        </table>
+        <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Save" onclick="return Validation()"/></div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    function Validation()
+    {
+        txtID = document.getElementById("ID").value;
+        txtName = document.getElementById("Name").value;
+        txtQuantity = document.getElementById("Quantity").value;
+        txtPrice = document.getElementById("Price").value;
+        if(txtID == "")
+        {
+            document.getElementById("errID").innerHTML = "Required field*";
+        }
+        else
+        {
+            document.getElementById("errID").innerHTML = "";
+        }
+        if(txtName == "")
+        {
+            document.getElementById("errName").innerHTML = "Required field*";
+            //return false;
+        }
+        else
+        {
+            document.getElementById("errName").innerHTML = "";
+        }
+        //-------------------------------------------------------------------
+        if (txtQuantity == "") 
+        {
+            document.getElementById("errQuantity").innerHTML = "Required field*";
+            //return false;
+        }
+        else 
+        {
+            document.getElementById("errQuantity").innerHTML = "";
+        }
+        //-------------------------------------------------------------------
+        if (txtPrice == "") 
+        {
+            document.getElementById("errPrice").innerHTML = "Required field*";
+            //return false;
+        }
+        else 
+        {
+            document.getElementById("errPrice").innerHTML = "";
+        }
+        if (txtName == "" || txtQuantity == "" || txtPrice == "" || txtID == "") 
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+</script>

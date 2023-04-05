@@ -13,27 +13,36 @@ namespace WebApp.Controllers
             Piphone.ID = 1;
             Piphone.Name = "iphone X10";
             Piphone.Quantity = 4;
+            Piphone.ImagePath = "/images/iphone.png";
+            Piphone.Price = 100;
 
             _products.Add(Piphone);
 
-            Product Pumbrella = new Product();
-            Pumbrella.ID = 2;
-            Pumbrella.Name = "Luxury umbrella";
-            Pumbrella.Quantity = 21;
+            Product Pjeans = new Product();
+            Pjeans.ID = 2;
+            Pjeans.Name = "Fahinable Jeans";
+            Pjeans.Quantity = 21;
+            Pjeans.ImagePath = "/images/jeans.png";
+            Pjeans.Price = 25.99;
 
-            _products.Add(Pumbrella);
+            _products.Add(Pjeans);
 
-            Product Pipad = new Product();
-            Pipad.ID = 3;
-            Pipad.Name = "Quick Computer";
-            Pipad.Quantity = 6;
+            Product Ptshirt = new Product();
+            Ptshirt.ID = 3;
+            Ptshirt.Name = "Quick Computer";
+            Ptshirt.Quantity = 6;
+            Ptshirt.ImagePath = "/images/tshirt.png";
+            Ptshirt.Price = 99.95;
 
-            _products.Add(Pipad);
+            _products.Add(Ptshirt);
 
             Product Plaptop = new Product();
             Plaptop.ID = 4;
             Plaptop.Name = "New generation";
             Plaptop.Quantity = 2;
+            Plaptop.ImagePath = "/images/laptop.png";
+            Plaptop.Price = 45.00;
+
 
             _products.Add(Plaptop);
         }
@@ -69,43 +78,23 @@ namespace WebApp.Controllers
         //    }
         //    return products[id];
         //}
-        public string GetProductByID(int id)
+        public ActionResult GetProductByID(int id)
         {
-            Category electronicsCTY = new Category();
-
-            if (id > 4)
+            foreach (Product product in _products)
             {
-                return "Not available!";
+                if (product.ID == id)
+                {
+                    return View(product);
+                }
             }
-            else
-            {
-                return $"ProductID is {_products[id].ID}, " +
-                    $"and ProductName is {_products[id].Name}, " +
-                    $"ProductQuantity is {_products[id].Quantity}, " +
-                    $"Category ID: {_products[id].Category.Category_ID}, " + 
-                    $"Category Name: {_products[id].Category.Category_Name}" +
-                    $"Category Description: {_products[id].Category.Category_Description}";
-            }
+            Product product1 = new Product();
+            return View(product1);
 
         }
         public ActionResult GetAllProducts()
         {
-            string result = "";
-            for (int i = 0; i < 4; i++)
-            {
-                //result = result + $"ProductID is {_products[i].ID}, " +
-                //    $"and ProductName is {_products[i].Name}, " +
-                //    $"ProductQuantity is {_products[i].Quantity}, " +
-                //    $"Category ID: {_products[i].Category.Category_ID}, " +
-                //    $"Category Name: {_products[i].Category.Category_Name}" +
-                //    $"Category Description: {_products[i].Category.Category_Description}\n\n";
-            }
-
-            //string result = "abc\n";
-            //result = result + "def\n";
-            //result = result + "ghi";
-            //return Content(result);
-            return View();
+            
+            return View(_products);
         }
         public ActionResult UpdateProductById(int id, string name, int quantity)
         {
@@ -127,6 +116,26 @@ namespace WebApp.Controllers
         public ActionResult ProductAmazon()
         {
             return View();
+        }
+        public ActionResult GetAllTableProducts()
+        {
+            return View(_products);
+        }
+        public ActionResult ProductForm()
+        {
+            return View();
+        }
+        public ActionResult ProductSave(int id, string name, int quantity, int price)
+        {
+            Product product = new Product();
+            product.ID = id;
+            product.Name = name;
+            product.Quantity = quantity;
+            product.Price = price;
+            
+
+            _products.Add(product);
+            return View("GetAllTableProducts",_products);
         }
     }
 }

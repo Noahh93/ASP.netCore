@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WebApp.Models.Product>
+
+<div style="padding-left: 200px;"><h1>Product List</h1></div>
+
+<table style="border: 1px solid;">
+    <tr style="border:1px solid;">
+        <td style="font-weight:bold; border:1px solid;">Product ID</td>
+        <td style="font-weight:bold; border:1px solid;">Product Name</td>
+        <td style="font-weight:bold; border:1px solid;">Product Quantity</td>
+        <td style="font-weight:bold; border:1px solid;">Action</td>
+        <td style="border: 1px solid;"><div style="font-weight:bold;">Image</div></td>
+        <td style="font-weight:bold; border:1px solid;">Price</td>
+    </tr>
+
+     @{double totalSum = 0;}
+    @foreach (Product product in Model)
+    {
+        <tr style="border: 1px solid;">
+            <td style="border: 1px solid; text-align:center;">@product.ID</td>
+            <td style="border: 1px solid;">@product.Name</td>
+            <td style="border: 1px solid; text-align:center;">@product.Quantity</td>
+            <td style="border: 1px solid;"><a href="/product/GetProductByID?id=@product.ID">Detail</a></td>
+            <td style="border: 1px solid;"><div><img src="@product.ImagePath"/></div></td>
+            <td style="border: 1px solid;">@product.Price</td>
+
+        </tr>
+        totalSum = totalSum + product.Price;
+
+    }
+</table>
+<div>
+
+    <div style="padding-left:600px;">CheckOut Total: @totalSum</div>
+</div>
+
+<a href="/category/getalltablecategories">Categories</a>
+

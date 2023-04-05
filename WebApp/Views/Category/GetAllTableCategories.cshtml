@@ -1,0 +1,23 @@
+﻿@model IEnumerable<WebApp.Models.Category>
+
+<div style="padding-left:200px;"><h1>Categories List</h1></div>
+<table style="color:red; border: 1px solid;">
+    <tr>
+        <td style="border: 1px solid;"><div style="font-weight:bold;">Category ID</div></td>
+        <td style="border: 1px solid;"><div style="font-weight:bold;">Category name</div></td>
+        <td style="border: 1px solid;"><div style="font-weight:bold;">Category description</div></td>
+        <td style="border: 1px solid;"><div style="font-weight:bold;">Action</div></td>
+        <td style="border: 1px solid;"><div style="font-weight:bold;">Image</div></td>
+    </tr>
+@foreach (Category category in Model)
+{
+    <tr style="color:black;">
+        <td style="border: 1px solid;"><div>@category.Category_ID</div></td>
+        <td style="border: 1px solid;"><div>@category.Category_Name</div></td>
+        <td style="border: 1px solid;"><div>@category.Category_Description</div></td>
+        <td style="border: 1px solid;"><a href="/category/getcategorybyid?id=@category.Category_ID">Detail</a></td>
+            <td style="border: 1px solid;"><div><img src="@category.ImagePath" /></div></td>
+    </tr>
+}
+</table>
+<a href="/product/getalltableproducts">Products</a>
