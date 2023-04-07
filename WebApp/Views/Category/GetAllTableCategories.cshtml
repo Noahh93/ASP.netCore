@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<WebApp.Models.Category>
 
-<div style="padding-left:200px;"><h1>Categories List</h1></div>
+
+
+<div style="padding-left: 200px;"><h1>Category List</h1></div>
 <table style="color:red; border: 1px solid;">
     <tr>
         <td style="border: 1px solid;"><div style="font-weight:bold;">Category ID</div></td>
@@ -15,9 +17,34 @@
         <td style="border: 1px solid;"><div>@category.Category_ID</div></td>
         <td style="border: 1px solid;"><div>@category.Category_Name</div></td>
         <td style="border: 1px solid;"><div>@category.Category_Description</div></td>
-        <td style="border: 1px solid;"><a href="/category/getcategorybyid?id=@category.Category_ID">Detail</a></td>
+        <td style="border: 1px solid;">
+            <a href="/category/getcategorybyid?id=@category.Category_ID">Detail</a>
+            <a href="/category/updatecategory?id=@category.Category_ID">Update</a>
+            <a href="/category/Deletecategory?id=@category.Category_ID" onclick="return DeleteAlert()">Delete</a>
+        </td>
             <td style="border: 1px solid;"><div><img src="@category.ImagePath" /></div></td>
     </tr>
 }
 </table>
 <a href="/product/getalltableproducts">Products</a>
+
+
+<script type="text/javascript">
+    
+    function DeleteAlert()
+    {
+        result = confirm("Are you sure you want to delete?");
+        if(result == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+
+
+
+</script>

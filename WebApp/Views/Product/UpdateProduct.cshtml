@@ -1,0 +1,35 @@
+﻿@model WebApp.Models.Product
+
+
+
+<form method="get" asp-controller="Product" asp-action="UpdateProductSave">
+    <div>
+        <h1 style="text-align:center;">Update product</h1>
+        <table style="text-align:left;">
+            <tr>
+                <image src="@Model.ImagePath"></image>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product ID:</div></td>
+                <td><input type="text" id="ID" name="ID" value="@Model.ID" readonly/></td>
+                <td id="errID" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product Name:</div></td>
+                <td><input type="text" id="Name" name="Name" value="@Model.Name" /></td>
+                <td id="errName" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product Quantity:</div></td>
+                <td><input type="text" id="Quantity" name="Quantity" value="@Model.Quantity"/></td>
+                <td id="errQuantity" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Product Price:</div></td>
+                <td><input type="text" id="Price" name="Price" value="@Model.Price"/></td>
+                <td id="errPrice" style="color:red; font-weight:bold;"></td>
+            </tr>
+        </table>
+        <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Update" /></div>
+    </div>
+</form>

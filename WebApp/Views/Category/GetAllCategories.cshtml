@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<WebApp.Models.Category>
 
+<!--Displaying CategoryList through a loop
+    IEnumerable is an interface of list
+-->
 @foreach(Category category in Model)
 {
     <div>Category ID: @category.Category_ID</div>

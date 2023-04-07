@@ -1,0 +1,69 @@
+﻿
+<form method="get" asp-controller="Category" asp-action="CategorySave">
+    <div>
+        <h1 style="text-align:center;">Add new Category</h1>
+        <table style="text-align:left;">
+            <tr>
+                <td><div style="font-weight:bold;">Category ID:</div></td>
+                <td><input type="text" id="ID" name="ID" /></td>
+                <td id="errID" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Category Name:</div></td>
+                <td><input type="text" id="Name" name="Name" /></td>
+                <td id="errName" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Category Description:</div></td>
+                <td><input type="text" id="Description" name="Description" /></td>
+                <td id="errDescription" style="color:red; font-weight:bold;"></td>
+            </tr>
+        </table>
+        <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Save" onclick="return Validation()" /></div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    function Validation() 
+    {
+        txtID = document.getElementById("ID").value;
+        txtName = document.getElementById("Name").value;
+        txtDescription = document.getElementById("Description").value;
+        if (txtID == "") 
+        {
+            document.getElementById("errID").innerHTML = "Required field*";
+        }
+        else 
+        {
+            document.getElementById("errID").innerHTML = "";
+        }
+        //-------------------------------------------------------------------
+        if (txtName == "") 
+        {
+            document.getElementById("errName").innerHTML = "Required field*";
+            //return false;
+        }
+        else 
+        {
+            document.getElementById("errName").innerHTML = "";
+        }
+        //-------------------------------------------------------------------
+        if (txtDescription == "") {
+            document.getElementById("errDescription").innerHTML = "Required field*";
+            //return false;
+        }
+        else 
+        {
+            document.getElementById("errDescription").innerHTML = "";
+        }
+
+        if (txtName == "" || txtQuantity == "" || txtDescription == "") 
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+</script>

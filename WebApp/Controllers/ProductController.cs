@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -45,10 +46,6 @@ namespace WebApp.Controllers
 
 
             _products.Add(Plaptop);
-        }
-        public ActionResult Index()
-        {
-            return View();
         }
         public string ProductName(string name)
         {
@@ -113,10 +110,6 @@ namespace WebApp.Controllers
             //
             return View();
         }
-        public ActionResult ProductAmazon()
-        {
-            return View();
-        }
         public ActionResult GetAllTableProducts()
         {
             return View(_products);
@@ -136,6 +129,48 @@ namespace WebApp.Controllers
 
             _products.Add(product);
             return View("GetAllTableProducts",_products);
+        }
+        public ActionResult UpdateProduct(int id)
+        {
+            foreach(Product product in _products)
+            {
+                if(product.ID == id)
+                {
+                    return View(product);
+                }
+
+            }
+
+            return View("GetAllTableProducts", _products);
+        }
+        public ActionResult UpdateProductSave(int id, string name, int quantity, double price)
+        {
+            foreach (Product product in _products)
+            {
+                if (product.ID == id)
+                {
+                    product.Name = name;
+                    product.Quantity = quantity;
+                    product.Price = price;
+                    break;
+                }
+
+            }
+
+            return View("GetAllTableProducts", _products); //With updated values ASSIGNMENT
+        }
+        public ActionResult DeleteProduct(int id)
+        {
+            foreach (Product product in _products)
+            {
+                if (product.ID == id)
+                {
+                    _products.Remove(product);
+                    break;
+                }
+
+            }
+            return View("GetAllTableProducts", _products);
         }
     }
 }
