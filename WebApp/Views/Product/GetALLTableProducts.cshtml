@@ -19,8 +19,14 @@
             <td style="border: 1px solid; text-align:center;">@product.ID</td>
             <td style="border: 1px solid;">@product.Name</td>
             <td style="border: 1px solid; text-align:center;">@product.Quantity</td>
-            <td style="border: 1px solid;"><a href="/product/GetProductByID?id=@product.ID">Detail</a></td>
-            <td style="border: 1px solid;"><div><img src="@product.ImagePath"/></div></td>
+            <td style="border: 1px solid;">
+                <div>
+                    <a href="/product/GetProductByID?id=@product.ID">Detail</a>
+                    <a href="/product/UpdateProduct?id=@product.ID">Update</a>
+                    <a href="/product/DeleteProduct?id=@product.ID" onclick="return DeleteAlert()">Delete</a><!--ASSIGNMENT-->
+                </div>
+            </td>
+            <td style="border: 1px solid;"><div><img src="@product.ImagePath"/></div></td> 
             <td style="border: 1px solid;">@product.Price</td>
 
         </tr>
@@ -32,6 +38,24 @@
 
     <div style="padding-left:600px;">CheckOut Total: @totalSum</div>
 </div>
-
 <a href="/category/getalltablecategories">Categories</a>
+
+
+
+<script type="text/javascript">
+    
+    function DeleteAlert()
+    {
+        result = confirm("Are you sure you want to delete?");
+        if(result == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+</script>
 

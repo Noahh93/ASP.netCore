@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -71,6 +72,56 @@ namespace WebApp.Controllers
         {
             return View(_categories);
         }
+        public ActionResult CategoryForm()
+        {
+            return View();
+        }
+        public ActionResult CategorySave(int id, string name, string description)
+        {
+            Category category = new Category();
+            category.Category_ID = id;
+            category.Category_Name = name;
+            category.Category_Description = description;
 
+            _categories.Add(category);
+            return View("GetAllTableCategories", _categories);
+        }
+        public ActionResult UpdateCategory(int id, string name, string description)
+
+        {                                                       //WHY do we have unused parameters??
+            foreach(Category category in _categories)
+            {
+                if(category.Category_ID == id)
+                {
+                    return View(category);
+                }
+            }
+            return View();
+        }
+        public ActionResult UpdateCategorySave(int id, string name, string description)
+        {
+            foreach(Category category in _categories)
+            {
+                if(category.Category_ID == id)
+                {
+                    category.Category_Name = name;
+                    category.Category_Description = description;
+                    break;
+                }
+            }
+            return View("GetAllTableCategories", _categories);
+        }
+        public ActionResult DeleteCategory(int id)
+        {
+            foreach (Category category in _categories)
+            {
+                if (category.Category_ID == id)
+                {
+                    _categories.Remove(category);
+                    break;
+                }
+            }
+            return View("GetAllTableCategories", _categories);
+        }
     }
 }

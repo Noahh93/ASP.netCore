@@ -1,0 +1,28 @@
+﻿@model WebApp.Models.Category
+
+<form method="get" asp-controller="Category" asp-action="UpdateCategorySave">
+    <div>
+        <h1 style="text-align:center;">Update Category</h1>
+        <table style="text-align:left;">
+            <tr>
+                <img src="@Model.ImagePath" />
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Category ID:</div></td>
+                <td><input type="text" id="ID" name="ID" value="@Model.Category_ID" readonly /></td>
+                <td id="errID" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Category Name:</div></td>
+                <td><input type="text" id="Name" name="Name" value="@Model.Category_Name" /></td>
+                <td id="errName" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Category Description:</div></td>
+                <td><input type="text" id="Description" name="Description" value="@Model.Category_Description" /></td>
+                <td id="errDescription" style="color:red; font-weight:bold;"></td>
+            </tr>
+        </table>
+        <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Update" /></div>
+    </div>
+</form>
