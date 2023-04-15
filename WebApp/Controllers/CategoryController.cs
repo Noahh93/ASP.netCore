@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using WebApp.Models;
+using WebApp.Repository;
 
 namespace WebApp.Controllers
 {
@@ -35,22 +36,12 @@ namespace WebApp.Controllers
             _categories.Add(category3);
 
         }
-        public string Index()
-        {
-            return "Welcome to Category Page";
-        }
-        public string CategoryName()
-        {
-            return "Phone Category";
-        }
+
         public int CategoryPrice()
         {
             return 200;
         }
-        public string CategoryDetail(int id, string name)
-        {
-            return $"Product ID is {id} and name is {name}";
-        }
+
         public ActionResult GetCategoryByID(int id)
         {
             foreach(Category category in _categories)
@@ -70,58 +61,76 @@ namespace WebApp.Controllers
         }
         public ActionResult GetAllTableCategories()
         {
-            return View(_categories);
+            CategoryRepository categoryRepository = new CategoryRepository();
+
+            List<Category> DBcategories = categoryRepository.GetAllCategories();
+            return View(DBcategories);
         }
+        
         public ActionResult CategoryForm()
         {
-            return View();
+            return View();          //This method has a view that works as a form
+                                    //When that form is filled it's then saved in the method below "CategorySave".
         }
-        public ActionResult CategorySave(int id, string name, string description)
+        public ActionResult CategorySave(int id, string name, string description, string imagepath)
         {
-            Category category = new Category();
-            category.Category_ID = id;
-            category.Category_Name = name;
-            category.Category_Description = description;
+            CategoryRepository DBcategory = new CategoryRepository();
+            DBcategory.CreateNewCategory(id, name, description, imagepath);
+            List<Category> categoryList = DBcategory.GetAllCategories();
 
-            _categories.Add(category);
-            return View("GetAllTableCategories", _categories);
+            return View("GetAllTableCategories", categoryList);
+            //Category category = new Category();
+            //category.Category_ID = id;
+            //category.Category_Name = name;
+            //category.Category_Description = description;
+
+            //_categories.Add(category);
+            //return View("GetAllTableCategories", _categories);
         }
-        public ActionResult UpdateCategory(int id, string name, string description)
+        public ActionResult UpdateCategory(int id)
+        {
+            CategoryRepository DBcategory = new CategoryRepository();
+            Category categoryVariable = DBcategory.GetCategoryByID(id);
 
-        {                                                       //WHY do we have unused parameters??
-            foreach(Category category in _categories)
+
+            if (categoryVariable == null)
             {
-                if(category.Category_ID == id)
-                {
-                    return View(category);
-                }
+                return View();
             }
-            return View();
+            else
+            {
+                return View("UpdateCategory", categoryVariable);
+            }
+
         }
         public ActionResult UpdateCategorySave(int id, string name, string description)
         {
-            foreach(Category category in _categories)
-            {
-                if(category.Category_ID == id)
-                {
-                    category.Category_Name = name;
-                    category.Category_Description = description;
-                    break;
-                }
-            }
-            return View("GetAllTableCategories", _categories);
+            CategoryRepository DBcategory = new CategoryRepository();
+            DBcategory.UpdateCategory(id, name, description);
+            List<Category> categoryList = DBcategory.GetAllCategories();
+           
+            return View("GetAllTableCategories", categoryList);
         }
         public ActionResult DeleteCategory(int id)
         {
-            foreach (Category category in _categories)
+            CategoryRepository DBcategory = new CategoryRepository();
+            DBcategory.DeleteCategory(id);
+            List<Category> categoryList = DBcategory.GetAllCategories();
+
+            return View("GetAllTableCategories", categoryList);
+        }
+        public ActionResult SearchCategory(string categoryName)
+        {
+            List<Category> categories = new List<Category>();
+            foreach(Category category in _categories)
             {
-                if (category.Category_ID == id)
+                if(category.Category_Name.ToLower().Contains(categoryName.ToLower()))
                 {
-                    _categories.Remove(category);
-                    break;
+                    categories.Add(category);
                 }
             }
-            return View("GetAllTableCategories", _categories);
+            ViewBag.Amount = categories.Count;
+            return View("GetAllTableCategories", categories);
         }
     }
 }

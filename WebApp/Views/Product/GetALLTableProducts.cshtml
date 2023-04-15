@@ -1,9 +1,33 @@
 ﻿@model IEnumerable<WebApp.Models.Product>
 
+
+
+@Html.Partial("_Header")
+                        <!--ViewBag in MVC is used to transfer temporary data from controller to the view-->
+                        <!--and not vice versa.-->
+    
+<form method="get" asp-controller="Product" asp-action="SearchProduct">
+    <div>
+        <a href="/product/ProductForm">Add new product</a>
+        <table>
+            <tr>
+                <td style="width:50px;"><div style="font-weight:bold;">Productname</div></td>
+                <td style="width:50px;"><input type="text" name="productName"/></td>
+                <td style="width:50px;"><input type="submit" value="Search" /></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>Total number of products: @ViewBag.amount</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
 <div style="padding-left: 200px;"><h1>Product List</h1></div>
 
 <table style="border: 1px solid;">
     <tr style="border:1px solid;">
+        <td style ="font-weight:bold; border:1px solid;">Serial #</td>
         <td style="font-weight:bold; border:1px solid;">Product ID</td>
         <td style="font-weight:bold; border:1px solid;">Product Name</td>
         <td style="font-weight:bold; border:1px solid;">Product Quantity</td>
@@ -13,34 +37,44 @@
     </tr>
 
      @{double totalSum = 0;}
+
+    @{int serialNumber = 0;}
     @foreach (Product product in Model)
     {
+        serialNumber  = serialNumber + 1;
+
         <tr style="border: 1px solid;">
+            <td style="border: 1px solid; text-align:center;">@serialNumber</td>
             <td style="border: 1px solid; text-align:center;">@product.ID</td>
             <td style="border: 1px solid;">@product.Name</td>
             <td style="border: 1px solid; text-align:center;">@product.Quantity</td>
             <td style="border: 1px solid;">
                 <div>
                     <a href="/product/GetProductByID?id=@product.ID">Detail</a>
-                    <a href="/product/UpdateProduct?id=@product.ID">Update</a>
-                    <a href="/product/DeleteProduct?id=@product.ID" onclick="return DeleteAlert()">Delete</a><!--ASSIGNMENT-->
+                    <a href="/product/UpdateProduct?id=@product.ID">Update</a>              <!------------>
+                    <a href="/product/DeleteProduct?id=@product.ID" onclick="return DeleteAlert()">Delete</a>
                 </div>
             </td>
             <td style="border: 1px solid;"><div><img src="@product.ImagePath"/></div></td> 
             <td style="border: 1px solid;">@product.Price</td>
-
         </tr>
         totalSum = totalSum + product.Price;
-
     }
-</table>
-<div>
 
-    <div style="padding-left:600px;">CheckOut Total: @totalSum</div>
+    <tr>
+        <td colspan="5" style="border: 1px solid;"><div style="text-align:right; font-weight:bold;">CheckOut Total:</div></td>
+        <td style="border: 1px solid; font-weight:bold;">@totalSum</td>
+    </tr>
+</table>
+
+<div>
+    <table>
+        
+    </table>
 </div>
 <a href="/category/getalltablecategories">Categories</a>
 
-
+@Html.Partial("_Footer")
 
 <script type="text/javascript">
     

@@ -1,35 +1,47 @@
 ﻿@model WebApp.Models.Product
 
 
+@Html.Partial("_Header")
 
 <form method="get" asp-controller="Product" asp-action="UpdateProductSave">
     <div>
         <h1 style="text-align:center;">Update product</h1>
-        <table style="text-align:left;">
+        <table>
             <tr>
-                <image src="@Model.ImagePath"></image>
-            </tr>
-            <tr>
-                <td><div style="font-weight:bold;">Product ID:</div></td>
-                <td><input type="text" id="ID" name="ID" value="@Model.ID" readonly/></td>
-                <td id="errID" style="color:red; font-weight:bold;"></td>
-            </tr>
-            <tr>
-                <td><div style="font-weight:bold;">Product Name:</div></td>
-                <td><input type="text" id="Name" name="Name" value="@Model.Name" /></td>
-                <td id="errName" style="color:red; font-weight:bold;"></td>
-            </tr>
-            <tr>
-                <td><div style="font-weight:bold;">Product Quantity:</div></td>
-                <td><input type="text" id="Quantity" name="Quantity" value="@Model.Quantity"/></td>
-                <td id="errQuantity" style="color:red; font-weight:bold;"></td>
-            </tr>
-            <tr>
-                <td><div style="font-weight:bold;">Product Price:</div></td>
-                <td><input type="text" id="Price" name="Price" value="@Model.Price"/></td>
-                <td id="errPrice" style="color:red; font-weight:bold;"></td>
+                <td>
+                    <table style="text-align:left;">
+                        <tr>
+                            <td><div style="font-weight:bold;">Product ID:</div></td>
+                            <td><input type="text" id="ID" name="ID" value="@Model.ID" readonly /></td>
+                            <td id="errID" style="color:red; font-weight:bold;"></td>
+                        </tr>
+                        <tr>
+                            <td><div style="font-weight:bold;">Product Name:</div></td>
+                            <td><input type="text" id="Name" name="Name" value="@Model.Name" /></td>
+                            <td id="errName" style="color:red; font-weight:bold;"></td>
+                        </tr>
+                        <tr>
+                            <td><div style="font-weight:bold;">Product Quantity:</div></td>
+                            <td><input type="text" id="Quantity" name="Quantity" value="@Model.Quantity" /></td>
+                            <td id="errQuantity" style="color:red; font-weight:bold;"></td>
+                        </tr>
+                        <tr>
+                            <td><div style="font-weight:bold;">Product Price:</div></td>
+                            <td><input type="text" id="Price" name="Price" value="@Model.Price" /></td>
+                            <td id="errPrice" style="color:red; font-weight:bold;"></td>
+                        </tr>
+                    </table>
+                    <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Update" /></div>
+                </td>
+                <td>
+                    <div style="padding-left:150px;"><image src="@Model.ImagePath"></image></div>
+                </td>
             </tr>
         </table>
-        <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Update" /></div>
+
+
+        
     </div>
 </form>
+<!--<div style="padding-left:400px; padding-bottom:300;"><image src="@Model.ImagePath"></image></div>-->
+@Html.Partial("_Footer")

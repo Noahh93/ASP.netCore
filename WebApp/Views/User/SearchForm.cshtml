@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WebApp.Models.User>
+
+
+@Html.Partial("_Header")
+
+<form method="get" asp-controller="User" asp-action="SearchUser">
+
+<div>
+    <table>                 <!--This is the search bar and button-->
+        <tr>
+            <td><div style="font-weight:bold; width:150px;">Username </div></td>
+            <td><input type="text" style="width: 400px;" name="userName"/></td>     <!--Name attribute takes info to frontend-->
+            <td style="padding-left:100px;"><input type="submit" value="search"/></td>
+        </tr>
+    </table>                <!--This is the search bar and button-->
+</div>
+
+</form>
+<div>
+    <table style="border:1px solid;">
+        <tr>
+            <td style="border:1px solid;"> ID</td>
+            <td style="border:1px solid;"> Firstname</td>
+            <td style="border:1px solid;"> Lastname</td>
+            <td style="border:1px solid;"> Email</td>
+        </tr>
+
+        @foreach(User user in Model)
+        {
+            <tr>
+                <td style="border:1px solid;"><div>@user.Id</div></td>
+                <td style="border:1px solid;"><div>@user.Firstname</div></td>
+                <td style="border:1px solid;"><div>@user.Lastname</div></td>
+                <td style="border:1px solid;"><div>@user.Email</div></td>
+            </tr>
+        }
+        
+    </table>
+</div>
+<div>
+    Total Number of records available: @ViewBag.TotalNumberOfRecords
+    
+</div>
+@Html.Partial("_Footer")
