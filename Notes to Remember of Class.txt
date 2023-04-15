@@ -1,0 +1,6 @@
+Points to Remember
+
+    MVC stands for Model, View and Controller.
+    Model represents the data
+    View is the User Interface.
+    Controller is the request handler.
