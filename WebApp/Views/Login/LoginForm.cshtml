@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebApp.Models.User>
+
+@Html.Partial("_Header")
+
+<form method="get" asp-controller="Login" asp-action="CheckUser">
+    <div>
+        <h1 style="text-align:center;">Login</h1>
+        <table>
+            <tr>
+                <td><div style="font-weight:bold;">Email:</div></td>
+                <td><input type="text" id="Email" name="Email"/></td>
+                <td id="errEmail" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Password:</div></td>
+                <td><input type="text" id="Password" name="Password"/></td>
+                <td id="errPassword" style="color:red; font-weight:bold;"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div style="padding-left:150px; padding-top:25px; padding-bottom:25px;">
+        <input type="submit" value="Login" onclick="return Validation()"/>
+    </div>
+    <div style="color:red; padding-bottom:20px;" font-weight:bold;>@ViewBag.errorMessage</div>
+</form>
+
+<script type="text/javascript">
+
+    function Validation()
+    {
+        txtEmail = document.getElementById("Email").value
+        txtPassword = document.getElementById("Password").value
+        if(txtEmail == "")
+        {
+            document.getElementById("errEmail").innerHTML = "Required field";
+        }
+        else
+        {
+            document.getElementById("errEmail").innerHTML = "";
+        }
+
+        if(txtPassword == "") 
+        {
+            document.getElementById("errPassword").innerHTML = "Required field";
+        }
+        else
+        {
+            document.getElementById("errPassword").innerHTML = "";
+        }
+        if(txtEmail == "" || txtPassword == "")
+        {
+            return false;
+        }
+        return true;
+    }
+
+</script>
+
+@Html.Partial("_Footer")

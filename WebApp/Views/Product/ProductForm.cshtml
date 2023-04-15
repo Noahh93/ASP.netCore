@@ -1,4 +1,8 @@
 ﻿
+
+
+@Html.Partial("_Header")
+
 <form method="get" asp-controller="Product" asp-action="ProductSave">
     <div>
         <h1 style="text-align:center;">Add new product</h1>
@@ -23,12 +27,45 @@
                 <td><input type="text" id="Price" name="Price"/></td>
                 <td id="errPrice" style="color:red; font-weight:bold;"></td>
             </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Country</div></td>
+                <td>
+                    <select id="Countries">     <!--Select = Dropdown list-->
+                        <option value="0">Select Country</option>
+                        @foreach(Country country in ViewBag.Countries)
+                        {
+                            <option value="@country.Id">@country.Name</option>
+                        }
+                    </select>
+                </td>
+                <td id="errCountry" style="color:red; font-weight:bold;"></td>
+            </tr>
+            <tr>
+                <td><div style="font-weight:bold;">Category</div></td>
+                <td>
+                    <select id="Categories">
+                        <option value="0">Select Category</option>
+                        @foreach(Category category in ViewBag.Categories)
+                        {
+                            <option value="@category.Category_Description">@category.Category_Name</option>
+                        }
+                    </select>
+                </td>
+                <td id="errCategory" style="color:red; font-weight:bold;"></td>
+            </tr>
         </table>
         <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Save" onclick="return Validation()"/></div>
+        <div style="color:red; font-weight:bold;">@ViewBag.Error</div>
     </div>
 </form>
 
+@Html.Partial("_Footer")
+
+
+
 <script type="text/javascript">
+
+    const maxAmount = 100;
 
     function Validation()
     {
@@ -36,6 +73,8 @@
         txtName = document.getElementById("Name").value;
         txtQuantity = document.getElementById("Quantity").value;
         txtPrice = document.getElementById("Price").value;
+        txtCountry = document.getElementById("Countries").value;
+        txtCategory = document.getElementById("Categories").value;
         if(txtID == "")
         {
             document.getElementById("errID").innerHTML = "Required field*";
@@ -44,6 +83,7 @@
         {
             document.getElementById("errID").innerHTML = "";
         }
+
         if(txtName == "")
         {
             document.getElementById("errName").innerHTML = "Required field*";
@@ -53,18 +93,22 @@
         {
             document.getElementById("errName").innerHTML = "";
         }
-        //-------------------------------------------------------------------
+
         if (txtQuantity == "") 
         {
             document.getElementById("errQuantity").innerHTML = "Required field*";
             //return false;
         }
+        else if(txtQuantity >= maxAmount)
+        {
+            document.getElementById("errQuantity").innerHTML = "Amount may not proceed 100";
+        }
         else 
         {
             document.getElementById("errQuantity").innerHTML = "";
         }
-        //-------------------------------------------------------------------
-        if (txtPrice == "") 
+
+        if(txtPrice == "") 
         {
             document.getElementById("errPrice").innerHTML = "Required field*";
             //return false;
@@ -73,12 +117,29 @@
         {
             document.getElementById("errPrice").innerHTML = "";
         }
-        if (txtName == "" || txtQuantity == "" || txtPrice == "" || txtID == "") 
+
+        if(txtCountry == "0")
+        {
+            document.getElementById("errCountry").innerHTML = "Please pick an option";
+        }
+        else
+        {
+            document.getElementById("errCountry").innerHTML = "";
+        }
+
+        if(txtCategory == "0")
+        {
+            document.getElementById("errCategory").innerHTML = "Please pick an option";
+        }
+        else
+        {
+            document.getElementById("errCategory").innerHTML = "";
+        }
+
+        if (txtName == "" || txtQuantity == "" || txtPrice == "" || txtID == "" || txtCountry == "" && txtCategory == "") 
         {
             return false;
         }
         return true;
     }
-
-
 </script>

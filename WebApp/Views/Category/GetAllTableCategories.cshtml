@@ -1,8 +1,26 @@
 ﻿@model IEnumerable<WebApp.Models.Category>
 
 
-
+@Html.Partial("_Header")
+<form method="get" asp-controller="category" asp-action="SearchCategory">
+    <div>
+        <a href="/category/CategoryForm">Add new category</a>
+        <table>
+            <tr>
+                <td style="width:50px;"><div style="font-weight:bold;">Categoryname</div></td>
+                <td style="width:50px;"><input type="text" name="categoryName" /></td>
+                <td style="width:50px;"><input type="submit" value="Search"/></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>Total number of Categories: @ViewBag.Amount</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
 <div style="padding-left: 200px;"><h1>Category List</h1></div>
+
 <table style="color:red; border: 1px solid;">
     <tr>
         <td style="border: 1px solid;"><div style="font-weight:bold;">Category ID</div></td>
@@ -19,7 +37,7 @@
         <td style="border: 1px solid;"><div>@category.Category_Description</div></td>
         <td style="border: 1px solid;">
             <a href="/category/getcategorybyid?id=@category.Category_ID">Detail</a>
-            <a href="/category/updatecategory?id=@category.Category_ID">Update</a>
+            <a href="/category/UpdateCategory?id=@category.Category_ID">Update</a>      <!-------------->
             <a href="/category/Deletecategory?id=@category.Category_ID" onclick="return DeleteAlert()">Delete</a>
         </td>
             <td style="border: 1px solid;"><div><img src="@category.ImagePath" /></div></td>
@@ -29,8 +47,9 @@
 <a href="/product/getalltableproducts">Products</a>
 
 
+@Html.Partial("_Footer")
+
 <script type="text/javascript">
-    
     function DeleteAlert()
     {
         result = confirm("Are you sure you want to delete?");
@@ -42,9 +61,5 @@
         {
             return false;
         }
-        
     }
-
-
-
 </script>

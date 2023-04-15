@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebApp.Models.User>
+
+<style type="text/css">
+    table, td
+    {
+        border:1px solid black;
+    }
+    table
+    {
+        border-spacing:30px;
+    }
+
+/*@*    md
+    {
+        @media (min-width: 768px) 
+        {
+            @content
+        }
+    }
+    lg
+    {
+        @media (min-width: 992px) 
+        {
+            @content
+        }
+    }
+    xxl
+    {
+        @media (min-width: 1400px) 
+        {
+            @content
+        }
+    }*@*/
+
+</style>
+@{
+    int count = 0;
+}
+<table style="border:1px solid; width:100%; height:100px;">
+    
+    
+        @foreach(User user in Model)    //starts with number 0 in the list of Model
+        {
+            @if(count == 0 || count == 4)
+            {
+               @:<tr>
+            }
+            @if(count < 8 )
+            {
+               <td style="border:1px solid red;"><div><img src="/images/@user.Image"></div></td>
+               count++;
+            }
+            @if(count == 4 || count == 8)
+            {
+               @:</tr>
+            }
+
+    }
+</table>
+
+@*<table style="border:1px solid green; border-spacing:30px;">
+    @{
+        int count = 0;
+    }
+    @foreach (User user in Model)   //user is list from actionResult     model is userlist
+    {
+        if (count % 4 == 0)     //if remainder is 0
+        {
+            @:<tr>      <!-- write as plain text -->
+        }
+            <td style="border:1px solid red;"><div><img src="/images/@user.Image"></div></td>
+
+        if (count % 4 == 3)
+        {
+            @:</tr>
+        }
+        count++;
+    }
+</table>*@

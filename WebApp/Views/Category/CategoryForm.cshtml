@@ -1,4 +1,6 @@
 ﻿
+@Html.Partial("_Header")
+
 <form method="get" asp-controller="Category" asp-action="CategorySave">
     <div>
         <h1 style="text-align:center;">Add new Category</h1>
@@ -22,6 +24,8 @@
         <div style="padding-left:150px; padding-top:50px;"><input type="submit" value="Save" onclick="return Validation()" /></div>
     </div>
 </form>
+
+@Html.Partial("_Footer")
 
 <script type="text/javascript">
 
