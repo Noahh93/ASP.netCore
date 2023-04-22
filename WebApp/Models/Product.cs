@@ -8,6 +8,10 @@
         public string ImagePath { get; set; }
         public double Price { get; set; }
 
+        public int HomeCategory { get; set; }
         public Category Category { get; set; }
+
+        public int HomeCountry { get; set; }
+        public Country Country { get; set; }
     }
 }

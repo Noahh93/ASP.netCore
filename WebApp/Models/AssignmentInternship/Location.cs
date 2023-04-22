@@ -2,9 +2,15 @@
 {
     public class Location
     {
-        string City { get; set; }
-        string State { get; set; }
-        string Country { get; set; }
-        int Postcode { get; set; }
+        
+
+        public Street Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+        public int Postcode { get; set; }
+        public Coordinates Coordinates { get; set; }
+        public Timezone Timezone { get; set; }
+        
     }
 }

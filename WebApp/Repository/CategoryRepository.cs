@@ -11,7 +11,7 @@ namespace WebApp.Repository
         {
 
             SqlConnection sqlConnection = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=Facebook;Integrated Security=True");
-            SqlCommand sqlCommand = new SqlCommand($"select CategoryID, CategoryName, CategoryDescription, CategoryImagePath from Category", sqlConnection);
+            SqlCommand sqlCommand = new SqlCommand($"select c.CategoryID, c.CategoryName, P.id, p.name, p.quantity, p.price from Category as C inner join Product as P on p.id = c.CategoryID", sqlConnection);
             sqlConnection.Open();
             SqlDataReader reader = sqlCommand.ExecuteReader();  //Executes for reading purpose
 
@@ -23,8 +23,14 @@ namespace WebApp.Repository
                 Category category = new Category();
                 category.Category_ID = (Convert.ToInt32(reader["CategoryID"]));
                 category.Category_Name = $"{reader["CategoryName"]}";
-                category.Category_Description = $"{reader["CategoryDescription"]}";
-                category.ImagePath = $"{reader["CategoryImagePath"]}";
+                //category.Category_Description = $"{reader["CategoryDescription"]}";
+                //category.ImagePath = $"{reader["CategoryImagePath"]}";
+
+                category.Product = new Product();
+                category.Product.Name = $"{reader["name"]}";
+                category.Product.Quantity = (Convert.ToInt32(reader["Quantity"]));
+                category.Product.Price = (Convert.ToInt32(reader["price"]));
+
                 _categories.Add(category);
             }
             sqlConnection.Close();
@@ -88,16 +94,26 @@ namespace WebApp.Repository
             sqlConnection.Close();
             return true;
         }
-        public bool SearchProduct()
+        public List<Category> SearchCategory(string keyword)
         {
             SqlConnection sqlConnection = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=Facebook;Integrated Security=True");
-            SqlCommand sqlCommand = new SqlCommand($"select CategoryID, CategoryName, CategoryDescription, CategoryImagePath from Category", sqlConnection);
+            SqlCommand sqlCommand = new SqlCommand($"select CategoryID, CategoryName, CategoryDescription, CategoryImagePath from Category where CategoryName like '%{keyword}%'", sqlConnection);
             sqlConnection.Open();
             SqlDataReader reader = sqlCommand.ExecuteReader();  //Executes for reading purpose
 
+            List<Category> _categories = new List<Category>();
 
-
-            return true;
+            while (reader.Read())
+            {
+                Category category = new Category();
+                category.Category_ID = (Convert.ToInt32(reader["CategoryID"]));
+                category.Category_Name = $"{reader["CategoryName"]}";
+                category.Category_Description = $"{reader["CategoryDescription"]}";
+                category.ImagePath = $"{reader["CategoryImagePath"]}";
+                _categories.Add(category);
+            }
+            sqlConnection.Close();
+            return _categories;
         }
     }
     

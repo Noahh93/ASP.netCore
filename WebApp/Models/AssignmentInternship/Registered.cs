@@ -3,6 +3,6 @@
     public class Registered
     {
         public DateTime Date { get; set; }
-        int Age { get; set; }
+        public int Age { get; set; }
     }
 }

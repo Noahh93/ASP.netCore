@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using WebApp.Models;
+using WebApp.Repository;
 
 namespace WebApp.Controllers
 {
@@ -38,17 +39,23 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public ActionResult CheckUser(string email, string password)
+        public ActionResult CheckUser(string email, string password) //This code only allows existing users to login
         {
-            foreach(User user in _users)
+            UserRepository DBuser = new UserRepository();
+            User user = DBuser.GetUserByEmailAndPassword(email, password);
+
+
+            if (email == user.Email && password == user.Password)
             {
-                if (email == user.Email && password == user.Password)
-                {
-                    return View("Welcome");
-                }
+                return View("Welcome");
             }
-            ViewBag.errorMessage = "Wrong user, please check your password!";
-            return View("LoginForm");
+            else
+            {
+                ViewBag.errorMessage = "Email or Password incorrect";
+                return View("LoginForm");
+            }
+
+            
         }
     }
 }

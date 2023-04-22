@@ -30,7 +30,7 @@
             <tr>
                 <td><div style="font-weight:bold;">Country</div></td>
                 <td>
-                    <select id="Countries">     <!--Select = Dropdown list-->
+                    <select id="Countries" name="homecountry">     <!--Select = Dropdown list-->
                         <option value="0">Select Country</option>
                         @foreach(Country country in ViewBag.Countries)
                         {
@@ -43,11 +43,11 @@
             <tr>
                 <td><div style="font-weight:bold;">Category</div></td>
                 <td>
-                    <select id="Categories">
+                    <select id="Categories" name="homeCategory">
                         <option value="0">Select Category</option>
                         @foreach(Category category in ViewBag.Categories)
                         {
-                            <option value="@category.Category_Description">@category.Category_Name</option>
+                            <option value="@category.Category_ID">@category.Category_Name</option>
                         }
                     </select>
                 </td>
@@ -142,4 +142,5 @@
         }
         return true;
     }
+
 </script>

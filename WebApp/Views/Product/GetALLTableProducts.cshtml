@@ -12,7 +12,7 @@
         <table>
             <tr>
                 <td style="width:50px;"><div style="font-weight:bold;">Productname</div></td>
-                <td style="width:50px;"><input type="text" name="productName"/></td>
+                <td style="width:50px;"><input type="text" name="keyword" /></td>
                 <td style="width:50px;"><input type="submit" value="Search" /></td>
             </tr>
             <tr>
@@ -24,6 +24,17 @@
     </div>
 </form>
 <div style="padding-left: 200px;"><h1>Product List</h1></div>
+<div style="padding-left: 550px; text-decoration:none; color:blue;">Sort by 
+    @if (ViewBag.ChangeOrder == "desc")
+    {
+        <a href="getalltableproducts?orderBy=desc" style="text-decoration:none;">highest price</a>
+    }
+    else
+    {
+        <a href="getalltableproducts?orderBy=asc" style="text-decoration:none;">lowest price</a>
+    }
+
+</div>
 
 <table style="border: 1px solid;">
     <tr style="border:1px solid;">
@@ -34,6 +45,8 @@
         <td style="font-weight:bold; border:1px solid;">Action</td>
         <td style="border: 1px solid;"><div style="font-weight:bold;">Image</div></td>
         <td style="font-weight:bold; border:1px solid;">Price</td>
+        <td style="font-weight:bold; border:1px solid;">Category</td>
+        <td style="font-weight:bold; border:1px solid;">Country</td>
     </tr>
 
      @{double totalSum = 0;}
@@ -51,12 +64,14 @@
             <td style="border: 1px solid;">
                 <div>
                     <a href="/product/GetProductByID?id=@product.ID">Detail</a>
-                    <a href="/product/UpdateProduct?id=@product.ID">Update</a>              <!------------>
+                    <a href="/product/UpdateProduct?id=@product.ID">Update</a>           
                     <a href="/product/DeleteProduct?id=@product.ID" onclick="return DeleteAlert()">Delete</a>
                 </div>
             </td>
             <td style="border: 1px solid;"><div><img src="@product.ImagePath"/></div></td> 
             <td style="border: 1px solid;">@product.Price</td>
+            <td style="border: 1px solid;">@product.Category.Category_Name</td>
+            <td style="border: 1px solid;">@product.Country.Name</td>
         </tr>
         totalSum = totalSum + product.Price;
     }

@@ -2,8 +2,8 @@
 {
     public class Name
     {
-        string Title { get; set; }
-        string First { get; set; }
-        string Last { get; set; }
+        public string Title { get; set; }
+        public string First { get; set; }
+        public string Last { get; set; }
     }
 }

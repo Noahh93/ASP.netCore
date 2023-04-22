@@ -1,8 +1,8 @@
 ﻿namespace WebApp.Models.AssignmentInternship
 {
-    public class coordinates
+    public class Coordinates
     {
-        string Latitude { get; set; }
-        string Longitude { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     }
 }

@@ -1,0 +1,112 @@
+﻿
+
+
+<form method="get" asp-controller="User" asp-action="SavingUser">
+    <h1 style="text-align:center;">Register User</h1>
+    <table style="text-align:left;">
+        <tr>
+            <td><div style="font-weight:bold;">Firstname</div></td>
+            <td><input type="text" id="first" name="firstname"/></td>
+            <td id="errorFirst" style="color:red; font-weight:bold;"></td>
+        </tr>
+        <tr>
+            <td><div style="font-weight:bold;">Lastname</div></td>
+            <td><input type="text" id="last" name="lastname" /></td>
+            <td id="errorLast" style="color:red; font-weight:bold;"></td>
+        </tr>
+        <tr>
+            <td><div style="font-weight:bold;">Email</div></td>
+            <td><input type="text" id="email" name="email" /></td>
+            <td id="errorEmail" style="color:red; font-weight:bold;"></td>
+        </tr>
+        <tr>
+            <td><div style="font-weight:bold;">Password</div></td>
+            <td><input type="password" id="password" name="password" /></td>
+            <td id="errorPassword" style="color:red; font-weight:bold;"></td>
+        </tr>
+        <tr>
+            <td><div style="font-weight:bold;">Country</div></td>
+            <td>
+                <select id="country" name="countryid">
+                    <option value="0">Select Country</option>
+                    @foreach (Country country in ViewBag.countries)
+                    {
+                        <option value="@country.Id">@country.Name</option>
+                    }
+                </select></td>
+            <td id="errorCountry" style="color:red; font-weight:bold;"></td>
+        </tr>
+    </table>
+    <div style="padding-left:100px; padding-top:50px;"><input type="submit" value="Register" onclick="return Validation();" />
+        <a href="/login/Loginform" style="text-decoration:none;">Login</a>
+    </div>
+    <div style="color:green; font-weight:bold;">@ViewBag.Message</div>
+    
+
+</form>
+
+
+<script type="text/javascript">
+    
+    function Validation()
+    {
+        txtFirst = document.getElementById("first").value;
+        txtLast = document.getElementById("last").value;
+        txtEmail = document.getElementById("email").value;
+        txtPassword = document.getElementById("password").value;
+        txtCountry = document.getElementById("country").value;
+
+        if(txtFirst == "")
+        {
+            document.getElementById("errorFirst").innerHTML = "Required field";
+        }
+        else
+        {
+            document.getElementById("errorFirst").innerHTML = "";
+        }
+
+        if (txtLast == "") 
+        {
+            document.getElementById("errorLast").innerHTML = "Required field";
+        }
+        else 
+        {
+            document.getElementById("errorLast").innerHTML = "";
+        }
+
+        if (txtEmail == "") 
+        {
+            document.getElementById("errorEmail").innerHTML = "Required field";
+        }
+        else 
+        {
+            document.getElementById("errorEmail").innerHTML = "";
+        }
+
+        if (txtPassword == "") 
+        {
+            document.getElementById("errorPassword").innerHTML = "Required field";
+        }
+        else 
+        {
+            document.getElementById("errorPassword").innerHTML = "";
+        }
+        if (txtCountry == "0")
+        {
+            document.getElementById("errorCountry").innerHTML = "Required field";
+        }
+        else
+        {
+            document.getElementById("errorCountry").innerHTML = "";
+        }
+
+        if (txtFirst == "" || txtLast == "" || txtEmail == "" || txtPassword == "" || txtCountry == "0") 
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+</script>
+

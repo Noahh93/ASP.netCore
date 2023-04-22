@@ -9,7 +9,7 @@
     <table>                 <!--This is the search bar and button-->
         <tr>
             <td><div style="font-weight:bold; width:150px;">Username </div></td>
-            <td><input type="text" style="width: 400px;" name="userName"/></td>     <!--Name attribute takes info to frontend-->
+                <td><input type="text" style="width: 400px;" name="searchWord" /></td>     <!--Name attribute takes info to frontend-->
             <td style="padding-left:100px;"><input type="submit" value="search"/></td>
         </tr>
     </table>                <!--This is the search bar and button-->
@@ -23,8 +23,11 @@
             <td style="border:1px solid;"> Firstname</td>
             <td style="border:1px solid;"> Lastname</td>
             <td style="border:1px solid;"> Email</td>
+            <td style="border:1px solid;"> Password</td>
+            <td style="border:1px solid;"> Country</td>
         </tr>
 
+        
         @foreach(User user in Model)
         {
             <tr>
@@ -32,6 +35,8 @@
                 <td style="border:1px solid;"><div>@user.Firstname</div></td>
                 <td style="border:1px solid;"><div>@user.Lastname</div></td>
                 <td style="border:1px solid;"><div>@user.Email</div></td>
+                <td style="border:1px solid;"><div>@user.Password</div></td>
+                <td style="border:1px solid;"><div>@user.Country.Name</div></td>         <!---->
             </tr>
         }
         

@@ -8,5 +8,7 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string Image { get; set; }
+        public int CountryID { get; set; }
+        public Country Country { get; set; }
     }
 }
