@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices.JavaScript;
 using WebApp.Models;
+using WebApp.Models.AssignmentInternship;
 using WebApp.Repository;
 
 namespace WebApp.Controllers
@@ -51,35 +54,108 @@ namespace WebApp.Controllers
 
             _users.Add(user5);
         }
-        public ActionResult SearchForm()
-        {
-            int totalNumberOfRecords = _users.Count;
-            ViewBag.TotalNumberOfRecords = totalNumberOfRecords;
-            return View(_users);
-            
-        }
-        public ActionResult SearchUser(string userName) //This parameter comes from name="userName" in SearchForm
-        {
-            List<User> _newUsers = new List<User>(); 
-            foreach (User user in _users)
-            {
-                string firstName = user.Firstname.ToLower();
-                string lastName = user.Lastname.ToLower();
-                string paramUserName = userName.ToLower();
-
-                if (paramUserName == firstName || paramUserName == lastName)
-                {
-                    _newUsers.Add(user);
-                }
-            }
-            ViewBag.TotalNumberOfRecords = _newUsers.Count; //Using ".Count" is an easy way to use total count of list
-            return View("SearchForm", _newUsers);
-        }
-        public ActionResult UserProfileGallery()
+        public ActionResult SearchForm(string searchWord)
         {
             UserRepository DBuser = new UserRepository();
-            List<User> userList = DBuser.GetAllUsers();
-            return View(userList);
+            List<User> registeredUser = DBuser.SearchUserFirstLastNameEmail(searchWord);
+
+            int totalNumberOfRecords = registeredUser.Count;
+            ViewBag.TotalNumberOfRecords = totalNumberOfRecords;
+
+            return View(registeredUser);
         }
+        public ActionResult SearchUser(string searchWord) //This parameter comes from name="userName" in SearchForm
+        {
+            UserRepository DBuser = new UserRepository();
+            List<User> registeredUser = DBuser.SearchUserFirstLastNameEmail(searchWord);
+
+
+            return View("SearchForm", registeredUser);
+        }
+        public ActionResult RegisterUser()  //this is the form
+        {
+            CountryRepository DBcountry = new CountryRepository();
+            List<Country> countries = DBcountry.GetCountries();
+
+            ViewBag.countries = countries;
+
+            return View(countries);
+        }
+        public ActionResult SavingUser(string firstname, string lastname, string email, string password, int countryid) //formsettings
+        {
+            UserRepository DBuser = new UserRepository();
+            bool user1 = DBuser.SaveUser(firstname, lastname, email, password, countryid);
+            ViewBag.Message = "User has been created";
+
+
+            CountryRepository DBcountry = new CountryRepository();
+            List<Country> countries = DBcountry.GetCountries();
+            ViewBag.countries = countries;
+
+            return View("RegisterUser", countries);
+
+
+
+            //user = DBuser.GetUserByEmail(email);
+            //if (user.Email != email)
+            //{
+
+            //}
+            //else
+            //{
+            //    ViewBag.Message = "User already exists";
+            //    return View("RegisterUser");
+            //}
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public ActionResult UserProfileGallery()
+        //{
+        //    UserRepository DBuser = new UserRepository();
+        //    List<User> userList = DBuser.GetAllUsers();
+        //    return View(userList);
+        //}
+        //public async Task<ActionResult>  DisplayUserProfile()
+        //{   
+        //    var client = new HttpClient();
+        //    var response = await client.GetAsync("https://randomuser.me/api/?results=50");
+        //    var content = await response.Content.ReadAsStringAsync();
+        //    var data = JObject.Parse(content)["results"];
+        //    List<UserProfile> userProfiles = new List<UserProfile>();
+        //    foreach (var item in data)
+        //    {
+        //        UserProfile userProfile = new UserProfile();
+        //        userProfile.Gender = item["gender"].ToString();
+        //        userProfile.Email = item["email"].ToString();
+        //        if (item["name"] != null)
+        //        {
+        //            var result = item["name"];
+        //            userProfile.Name.Title = item["name"]?["title"]?.ToString();
+
+        //            userProfile.Name.First = item["name"]["first"].ToString();
+        //            userProfile.Name.Last = item["name"]["last"].ToString();
+        //        }
+
+
+        //        userProfiles.Add(userProfile);
+        //    }
+        //    return View(userProfiles);
+        //}
+
     }
 }

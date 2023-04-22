@@ -2,7 +2,7 @@
 {
     public class Timezone
     {
-        public DateTime Offset { get; set; } 
-        string Description { get; set; }
+        public DateTime Offset { get; set; }
+        public string Description { get; set; }
     }
 }

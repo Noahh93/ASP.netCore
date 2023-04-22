@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using WebApp.Models;
 using WebApp.Repository;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace WebApp.Controllers
 {
@@ -64,9 +65,17 @@ namespace WebApp.Controllers
             CategoryRepository categoryRepository = new CategoryRepository();
 
             List<Category> DBcategories = categoryRepository.GetAllCategories();
+
             return View(DBcategories);
         }
-        
+        public ActionResult SearchCategory(string keyword)
+        {
+            CategoryRepository DBcategory = new CategoryRepository();
+            List<Category> categories = DBcategory.SearchCategory(keyword);
+
+            ViewBag.Amount = categories.Count;
+            return View("GetAllTableCategories", categories);
+        }
         public ActionResult CategoryForm()
         {
             return View();          //This method has a view that works as a form
@@ -119,18 +128,6 @@ namespace WebApp.Controllers
 
             return View("GetAllTableCategories", categoryList);
         }
-        public ActionResult SearchCategory(string categoryName)
-        {
-            List<Category> categories = new List<Category>();
-            foreach(Category category in _categories)
-            {
-                if(category.Category_Name.ToLower().Contains(categoryName.ToLower()))
-                {
-                    categories.Add(category);
-                }
-            }
-            ViewBag.Amount = categories.Count;
-            return View("GetAllTableCategories", categories);
-        }
+
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Street
     {
-        int Number { get; set; }
-        string Name { get; set; }
+        public int Number { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace WebApp.Models.AssignmentInternship
 {
-    public class dob
+    public class Dob
     {
-        DateTime Date { get; set; }
-        int Age { get; set; }
+        public DateTime Date { get; set; }
+        public int Age { get; set; }
     }
 }

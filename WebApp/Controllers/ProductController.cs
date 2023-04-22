@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Xml.Linq;
 using WebApp.Models;
 using WebApp.Repository;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace WebApp.Controllers
 {
@@ -134,70 +135,61 @@ namespace WebApp.Controllers
             {
                 return View(productVariable);
             }
-
-
         }
         public ActionResult GetAllProducts()
         {
 
             ProductRepository DBproduct = new ProductRepository();
-            List<Product> product = DBproduct.GetAllProducts();
+            List<Product> product = DBproduct.GetAllProducts("asc");
             return View(product);
         }
-        //public ActionResult UpdateProductById(int id, string name, int quantity)
-        //{
-        //    if (_products[id].ID == id)
-        //    {
-        //        _products[id].Name = name;
-        //        _products[id].Quantity = quantity;
-        //        return "Product has been updated";
-        //    }
-        //    else
-        //    {
-        //        return "Product not updated";
-        //    }
-
-        //    Display all categories, display category by ID
+        public ActionResult GetAllTableProducts(string orderBy)
+        {
+            if(orderBy == null || orderBy == "" || orderBy == "asc")
+            {
+                orderBy = "asc";
+                ViewBag.ChangeOrder = "desc";
+            }
+            else
+            {
+                orderBy = "desc";
+                ViewBag.ChangeOrder = "asc";
+            }                
 
 
-        //    return View();
-        //}
-        public ActionResult GetAllTableProducts()
+            ProductRepository DBproduct = new ProductRepository();
+            List<Product> product = DBproduct.GetAllProducts(orderBy);
+
+            return View(product);
+        }
+        public ActionResult SearchProduct(string keyword)
         {
             ProductRepository DBproduct = new ProductRepository();
-            List<Product> product = DBproduct.GetAllProducts();
-            return View(product);
+            List<Product> products = DBproduct.SearchProduct(keyword);
+
+
+
+            ViewBag.amount = products.Count;
+            return View("GetAllTableProducts", products);
         }
         public ActionResult ProductForm()
         {
-            ViewBag.Countries = _countries;
-            ViewBag.Categories = _categories;
+            CountryRepository DBcountry = new CountryRepository();
+            CategoryRepository DBcategory = new CategoryRepository();
+
+            ViewBag.Countries = DBcountry.GetCountries();
+            ViewBag.Categories = DBcategory.GetAllCategories();
             ViewBag.Error = "";
             return View();
         }                       //PRACTICE VIEW and VIEWBAG
-        public ActionResult ProductSave(int id, string name, int quantity, int price, string imagepath)
+        public ActionResult ProductSave(int id, string name, int quantity, int price, string imagepath, int homeCategory, int homecountry)
         {
             ProductRepository DBproduct = new ProductRepository();
-            DBproduct.CreateNewProduct( id, name, quantity, imagepath, price);
-            List<Product> productList = DBproduct.GetAllProducts();
+            DBproduct.CreateNewProduct( id, name, quantity, imagepath, price, homeCategory, homecountry);
+            //List<Product> productList = DBproduct.GetAllProducts();
 
-            return View("GetAllTableProducts", productList);
-            //Product product = new Product();
-            //product.ID = id;
-            //product.Name = name;
-            //product.Quantity = quantity;
-            //product.Price = price;
-
-            //if(product.Price > 5000)
-            //{
-            //    ViewBag.Countries = _countries;
-            //    ViewBag.Categories = _categories;
-            //    ViewBag.Error = "Product not saved, price exceeded 5000";
-            //    return View("ProductForm");
-            //}
-
-            //_products.Add(product); //save into database instead of list
-            //return View("GetAllTableProducts",_products);
+            return RedirectToAction("GetAllTableProducts", "Product");
+            //return View("GetAllTableProducts", productList);
         }
         public ActionResult UpdateProduct(int id)               
         {
@@ -210,7 +202,7 @@ namespace WebApp.Controllers
         {
             ProductRepository DBproduct = new ProductRepository();
             DBproduct.UpdateProduct(id, name, quantity, price);
-            List<Product> productList = DBproduct.GetAllProducts();
+            List<Product> productList = DBproduct.GetAllProducts("asc");
 
             return View("GetAllTableProducts", productList); 
         }
@@ -218,23 +210,10 @@ namespace WebApp.Controllers
         {
             ProductRepository DBproduct = new ProductRepository();
             DBproduct.DeleteProduct(id);
-            List<Product> productList = DBproduct.GetAllProducts();
+            List<Product> productList = DBproduct.GetAllProducts("asc");
 
             return View("GetAllTableProducts", productList);
         }
-        public ActionResult SearchProduct(string productName)
-        {
-            List<Product> products = new List<Product>();
-            foreach (Product product in _products)
-            {
-                if(product.Name.ToLower().Contains(productName.ToLower()))  
-                {
-                    products.Add(product);
-                }
-            }
-
-            ViewBag.amount = products.Count;
-            return View("GetAllTableProducts", products);
-        }
+        
     }
 }
